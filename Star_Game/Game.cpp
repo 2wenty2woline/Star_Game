@@ -15,7 +15,7 @@ Game::~Game()
 	delete this->_window;
 }
 
-																// Function
+																// Functions
 void Game::run()
 {
 	while (_window->isOpen())
