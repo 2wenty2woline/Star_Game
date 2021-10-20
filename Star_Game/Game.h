@@ -7,8 +7,14 @@ class Game
 private:
 	sf::RenderWindow*			_window;
 
-	// Private Function
+														// Player
+	Player*						_player;
+
+														// Private Function
 	void						initWindow();
+	void						initPlayer();
+
+	void						movementPlayer();
 
 public:
 	Game();
