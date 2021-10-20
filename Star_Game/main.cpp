@@ -2,8 +2,13 @@
 
 int main()
 {
+<<<<<<< Updated upstream
 	// Объект, который, собственно, является главным окном приложения
 	RenderWindow window(VideoMode(200, 200), "SFML Works!");
+=======
+										// --
+	Game game;
+>>>>>>> Stashed changes
 
 	// Главный цикл приложения. Выполняется, пока открыто окно
 	while (window.isOpen())
