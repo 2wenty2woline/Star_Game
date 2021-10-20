@@ -3,6 +3,8 @@
 void Game::initWindow()
 {
 	_window				= new sf::RenderWindow(sf::VideoMode(800, 600), "Star Game", sf::Style::Default);
+	_window->setFramerateLimit(60);
+	_window->setVerticalSyncEnabled(false);
 }
 
 Game::Game()
@@ -34,7 +36,13 @@ void Game::update()
 	{
 																// If clicked close
 		if (event.type == sf::Event::Closed)
+		{
 			_window->close();
+		}
+		if (event.KeyPressed && event.key.code == sf::Keyboard::Escape)
+		{
+			_window->close();
+		}
 	}
 }
 
