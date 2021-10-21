@@ -7,30 +7,14 @@ void Game::initWindow()
 	_window->setVerticalSyncEnabled(false);
 }
 
-void Game::initPlayer()
+void Game::initTextures()
 {
-	_player = new Player();
+	
 }
 
-void Game::movementPlayer()
+void Game::initPlayer()
 {
-																// Move player func
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-	{
-		_player->move(-1.f, 0.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-	{
-		_player->move(1.f, 0.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-	{
-		_player->move(0.f, -1.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-	{
-		_player->move(0.f, 1.f);
-	}
+	_player				= new Player();
 }
 
 Game::Game()
@@ -57,7 +41,7 @@ void Game::run()
 	
 }
 
-void Game::update()
+void Game::updatePollEvents()
 {
 	sf::Event event;
 	while (_window->pollEvent(event))
@@ -67,14 +51,40 @@ void Game::update()
 		{
 			_window->close();
 		}
-		if(event.KeyPressed && event.key.code == sf::Keyboard::Escape)
+		if (event.KeyPressed && event.key.code == sf::Keyboard::Escape)
 		{
 			_window->close();
 		}
 	}
+}
 
+void Game::updateInput()
+{
+																// Move player func
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+	{
+		_player->move(-1.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+	{
+		_player->move(1.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+	{
+		_player->move(0.f, -1.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+	{
+		_player->move(0.f, 1.f);
+	}
+}
+
+void Game::update()
+{
+	
+	this->updatePollEvents();
 																// Player moves here
-	movementPlayer();
+	this->updateInput();
 }
 
 void Game::render()

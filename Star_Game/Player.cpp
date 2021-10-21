@@ -36,7 +36,7 @@ void Player::move(const float dirX, const float dirY)
 	_sprite.move(_movemetSpeed * dirX, _movemetSpeed * dirY);
 }
 
-// Function
+																			// Function
 void Player::update()
 {
 
