@@ -17,13 +17,17 @@ public:
 
 																					// Const/Dest
 	Bullet();
-	Bullet(sf::Texture& texture, float dir_x, float dir_y, float movement_Speed);
+	Bullet(sf::Texture* texture, float pos_x, float pos_y, 
+								 float dir_x, float dir_y, float movement_Speed);
 	virtual ~Bullet();
+
+																					// Accessor
+	const sf::FloatRect		getBounds() const;
 
 																					// Private function
 
 	void					update();
-	void					render(sf::RenderTarget& target);
+	void					render(sf::RenderTarget* target);
 
 };
 
