@@ -6,6 +6,9 @@ void Player::initVariables()
 
 	_coolDownMax	= 10.f;
 	_coolDown		= _coolDownMax;
+
+	_hpMax			= 100;
+	_hp				= _hpMax;
 }
 
 void Player::initTexture()
@@ -48,6 +51,16 @@ const sf::FloatRect Player::getBounds() const
 	return _sprite.getGlobalBounds();
 }
 
+const int & Player::getHp() const
+{
+	return _hp;
+}
+
+const int & Player::getHpMax() const
+{
+	return _hpMax;
+}
+
 void Player::setPosition(const sf::Vector2f pos)
 {
 	_sprite.setPosition(pos);
@@ -56,6 +69,18 @@ void Player::setPosition(const sf::Vector2f pos)
 void Player::setPosition(const float pos_x, const float pos_y)
 {
 	_sprite.setPosition(pos_x, pos_y);
+}
+
+void Player::setHp(const int hp)
+{
+	_hp = hp;
+	if (_hp < 0)
+		_hp = 0;
+}
+
+void Player::loosHp(const int value)
+{
+	_hp -= value;
 }
 
 void Player::move(const float dirX, const float dirY)

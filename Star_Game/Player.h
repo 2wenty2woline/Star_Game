@@ -18,6 +18,9 @@ private:
 	float						_coolDown;
 	float						_coolDownMax;
 
+	int							_hp;
+	int							_hpMax;
+
 															// Function private
 	void						initVariables();
 	void						initTexture();
@@ -30,10 +33,14 @@ public:
 															// Accessor
 	const sf::Vector2f&			getPos()const;
 	const sf::FloatRect			getBounds() const;
+	const int&					getHp() const;
+	const int&					getHpMax() const;
 
 															// Modifie
 	void						setPosition(const sf::Vector2f pos);
 	void						setPosition(const float pos_x, const float pos_y);
+	void						setHp(const int hp);
+	void						loosHp(const int value);
 
 															// Function public
 	void						move(const float dirX, const float dirY);

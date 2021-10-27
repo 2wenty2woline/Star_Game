@@ -20,10 +20,28 @@ void Game::initGUI()
 	{
 		std::cout << " ! ERROR::GAME::INITGUI::Faild to loat font" << std::endl;
 	}
+
 																// Init point text
+	_pointText.setPosition(700.f, 25.f);
 	_pointText.setFont(_font);
 	_pointText.setCharacterSize(24);
 	_pointText.setFillColor(sf::Color::White);
+
+																// Game ovet GUI
+	_gameOverText.setFont(_font);
+	_gameOverText.setCharacterSize(60);
+	_gameOverText.setFillColor(sf::Color::Red);
+	_gameOverText.setPosition(_window->getSize().x / 2.f - 150,
+							  _window->getSize().y / 2.f - 50);
+	_gameOverText.setString("GAME OVER!");
+
+																// init player GUI
+	_playerHpBar.setSize(sf::Vector2f(300.f, 25.f));
+	_playerHpBar.setFillColor(sf::Color::Red);
+	_playerHpBar.setPosition(sf::Vector2f(5.f, 30.f));
+
+	_playerHpBarBack = _playerHpBar;
+	_playerHpBarBack.setFillColor(sf::Color(25, 25, 25, 200));
 }
 
 void Game::initWorld()
@@ -93,7 +111,12 @@ void Game::run()
 {
 	while (_window->isOpen())
 	{
-		this->update();
+		this->updatePollEvents();
+		if (_player->getHp() > 0)
+		{
+			this->update();
+		}
+		
 		this->render();
 	}
 }
@@ -150,7 +173,12 @@ void Game::updateGUI()
 	std::stringstream ss;
 	ss << "Points: " << _points;
 	_pointText.setString(ss.str());
+
+																// Update player GUI
+	float hpPercent = static_cast<float>(_player->getHp()) / _player->getHpMax();
+	_playerHpBar.setSize(sf::Vector2f(300.f * hpPercent, _playerHpBar.getSize().y));
 }
+
 
 void Game::updateWorld()
 {
@@ -197,8 +225,8 @@ void Game::updateBullet()
 		if (b->getBounds().top + b->getBounds().height < 0.f)
 		{
 																// Dellete bullet
-			//delete _bullet.at(count);
-			_bullet.erase(_bullet.begin() + count);
+			delete _bullet.at(count);
+			_bullet.erase(_bullet.begin() + count);	
 			--count;
 		}
 
@@ -229,7 +257,13 @@ void Game::updateEnemies()
 			delete _enemies.at(count);
 			_enemies.erase(_enemies.begin() + count);
 			std::cout << _enemies.size() << std::endl;
-			--count;
+		}
+																// Enemy player collision
+		else if (enemy->getBounds().intersects(_player->getBounds()))
+		{
+			_player->loosHp(_enemies.at(count)->getDamage());
+			delete _enemies.at(count);
+			_enemies.erase(_enemies.begin() + count);
 		}
 		++count;
 	}
@@ -262,11 +296,8 @@ void Game::updateCombat()
 
 void Game::update()
 {
-	
-	this->updatePollEvents();
 																// Player moves here
 	this->updateInput();
-
 	_player->update();
 
 	this->updateCollision();
@@ -285,6 +316,9 @@ void Game::update()
 void Game::renderGUI()
 {
 	_window->draw(_pointText);
+
+	_window->draw(_playerHpBarBack);
+	_window->draw(_playerHpBar);
 }
 
 void Game::renderWorld()
@@ -314,6 +348,12 @@ void Game::render()
 	}
 
 	this->renderGUI();
+	
+																// Game over screen
+	if (_player->getHp() <= 0)
+	{
+		_window->draw(_gameOverText);
+	}
 
 	_window->display();
 }

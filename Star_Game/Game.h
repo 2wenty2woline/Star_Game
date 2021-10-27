@@ -21,6 +21,8 @@ private:
 	sf::Font							_font;
 	sf::Text							_pointText;
 
+	sf::Text							_gameOverText;
+
 														// World
 	sf::Texture							_worldTextur;
 	sf::Sprite							_wordlBackground;
@@ -28,8 +30,10 @@ private:
 														// System
 	unsigned							_points;
 
-														// Player
+														// Player, PlayerGUI
 	Player*								_player;
+	sf::RectangleShape					_playerHpBar;
+	sf::RectangleShape					_playerHpBarBack;
 
 														// Enemies
 	float								_spawnTimer;
